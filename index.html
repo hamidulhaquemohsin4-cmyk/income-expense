@@ -7,7 +7,7 @@
     <style>
         :root { --primary: #1e3c72; --secondary: #2a5298; --success: #27ae60; --danger: #e74c3c; }
 
-        /* VIBRANT RUNNING GRADIENT BACKGROUND */
+        /* VIBRANT RUNNING GRADIENT */
         body { 
             margin: 0; font-family: 'Segoe UI', sans-serif; padding: 20px; min-height: 100vh;
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #1e3c72, #2a5298);
@@ -28,29 +28,42 @@
         
         .toolbar { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; }
         
-        /* Data Entry Tables */
+        /* Tables */
         .table-wrapper { overflow-x: auto; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; }
         table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; }
-        th { background: var(--primary); color: white; padding: 10px 5px; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.1); }
+        th { background: var(--primary); color: white; padding: 10px 5px; text-transform: uppercase; }
         td { border: 1px solid #eee; padding: 5px; text-align: center; }
         
         .week-title { background: var(--primary); color: white; padding: 8px 20px; font-weight: bold; border-radius: 8px 8px 0 0; display: inline-block; margin-top: 30px; }
 
-        /* WEEKLY SUMMARY TABLE (MATCHING YOUR IMAGE) */
-        .summary-table { max-width: 1000px; margin: 0 0 50px 0; border: 1px solid #ccc; }
-        .summary-table th { background: #E0E0E0; color: #444; font-weight: bold; text-align: center; }
-        .summary-table td { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
-        .summary-table .cat-col { background: #f9f9f9; font-weight: 500; width: 25%; }
-        .summary-table .tot-col { width: 15%; text-align: center; }
-        .summary-table .note-input { width: 95%; border: none; background: transparent; font-style: italic; color: #555; text-align: left; }
-        .summary-table .note-input::placeholder { color: #ccc; }
-        .summary-table .total-row-inc { background: #f0f7ff; font-weight: bold; }
-        .summary-table .total-row-exp { background: #fff5f5; font-weight: bold; }
+        /* DESCRIPTION BOX UNDERNEATH WEEK */
+        .description-area {
+            width: 100%;
+            margin-bottom: 40px;
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .description-label { font-weight: bold; color: var(--primary); margin-bottom: 5px; display: block; text-transform: uppercase; font-size: 12px; }
+        .description-input { 
+            width: 100%; 
+            min-height: 80px; 
+            border: 1px solid #ccc; 
+            border-radius: 6px; 
+            padding: 10px; 
+            font-family: inherit; 
+            resize: vertical; 
+            background: white;
+            box-sizing: border-box;
+        }
 
         input[type="number"], input[type="date"] { width: 85%; border: 1px solid #ccc; padding: 4px; border-radius: 4px; text-align: center; }
         .row-total { font-weight: bold; color: var(--primary); background: #f8faff; }
         
-        /* Direct Debits Section */
+        /* Direct Debits */
         .dd-section { max-width: 600px; margin-top: 40px; }
         .dd-section th { background: #9E9E9E; }
 
@@ -63,7 +76,7 @@
 <div class="container" id="capture">
     <div style="text-align:center; margin-bottom:20px;">
         <h1 style="color: var(--primary); margin:0;">WEEKLY INCOME & EXPENSE SHEET</h1>
-        <p style="font-weight:bold; color:#777;">Device Storage Active • Design by Yamin</p>
+        <p style="font-weight:bold; color:#777;">Design by Yamin</p>
     </div>
 
     <div class="toolbar">
@@ -101,18 +114,17 @@
 </div>
 
 <script>
-const DB_NAME = "YaminFinance_FinalV1";
+const DB_NAME = "YaminFinal_DescOnly";
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const incCols = ["Work", "Carework", "Delivery", "JustEat", "Deliveroo", "Other Inc School"];
-const expCols = ["Petrol", "Car", "House", "Online", "Other Exp"]; // Fixed/Monthly Removed
+const expCols = ["Petrol", "Car", "House", "Online", "Other Exp"];
 
 function init() {
     let container = document.getElementById('mainTableSpace');
     let html = "";
 
     for (let w = 1; w <= 4; w++) {
-        // Daily Data Entry
-        html += `<div class="week-title">WEEK ${w} DATA ENTRY</div>
+        html += `<div class="week-title">WEEK ${w}</div>
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -129,54 +141,20 @@ function init() {
             let rId = `w${w}d${d}`;
             html += `<tr>
                 <td>${days[d]}<br><input type="date" class="data-input" data-key="${rId}_date"></td>`;
-            for(let i=0; i<6; i++) html += `<td><input type="number" step="0.01" class="data-input inc-v-w${w}-c${i}" data-key="${rId}_i${i}"></td>`;
+            for(let i=0; i<6; i++) html += `<td><input type="number" step="0.01" class="data-input inc-v-w${w}" data-key="${rId}_i${i}"></td>`;
             html += `<td id="tot_inc_${rId}" class="row-total">0.00</td>`;
-            for(let e=0; e<5; e++) html += `<td><input type="number" step="0.01" class="data-input exp-v-w${w}-c${e}" data-key="${rId}_e${e}"></td>`;
+            for(let e=0; e<5; e++) html += `<td><input type="number" step="0.01" class="data-input exp-v-w${w}" data-key="${rId}_e${e}"></td>`;
             html += `<td id="tot_exp_${rId}" class="row-total">0.00</td></tr>`;
         }
-        html += `</tbody></table></div>`;
-
-        // Weekly Summary Table with Note column underneath
-        html += `<div class="table-wrapper summary-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="cat-col">CATEGORY</th>
-                        <th class="tot-col">TOTAL (£)</th>
-                        <th>NOTES / DESCRIPTIONS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${incCols.map((c, i) => `
-                    <tr>
-                        <td class="cat-col">${c} Total</td>
-                        <td class="tot-col" id="w${w}_inc_c${i}_tot">0.00</td>
-                        <td><input type="text" class="data-input note-input" data-key="w${w}_inc_c${i}_note" placeholder="Optional details..."></td>
-                    </tr>`).join('')}
-                    <tr class="total-row-inc">
-                        <td class="cat-col">Total Weekly Income</td>
-                        <td class="tot-col" id="w${w}_inc_grand">0.00</td>
-                        <td></td>
-                    </tr>
-                    <tr><td colspan="3" style="background:#eee; height:8px; padding:0;"></td></tr>
-                    ${expCols.map((c, i) => `
-                    <tr>
-                        <td class="cat-col">${c} Total</td>
-                        <td class="tot-col" id="w${w}_exp_c${i}_tot">0.00</td>
-                        <td><input type="text" class="data-input note-input" data-key="w${w}_exp_c${i}_note" placeholder="Optional details..."></td>
-                    </tr>`).join('')}
-                    <tr class="total-row-exp">
-                        <td class="cat-col">Total Weekly Expense</td>
-                        <td class="tot-col" id="w${w}_exp_grand">0.00</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+        html += `</tbody></table></div>
+        <div class="description-area">
+            <label class="description-label">Week ${w} Notes & Descriptions</label>
+            <textarea class="data-input description-input" data-key="week_${w}_desc" placeholder="Enter your descriptions here..."></textarea>
         </div>`;
     }
     container.innerHTML = html;
 
-    document.querySelectorAll('input').forEach(el => {
+    document.querySelectorAll('input, textarea').forEach(el => {
         el.addEventListener('input', () => { calculate(); autoSave(); });
     });
     loadData();
@@ -184,19 +162,6 @@ function init() {
 
 function calculate() {
     for (let w = 1; w <= 4; w++) {
-        let wInc = 0; let wExp = 0;
-        incCols.forEach((_, cIdx) => {
-            let colSum = 0;
-            document.querySelectorAll(`.inc-v-w${w}-c${cIdx}`).forEach(input => colSum += Number(input.value) || 0);
-            document.getElementById(`w${w}_inc_c${cIdx}_tot`).innerText = colSum.toFixed(2);
-            wInc += colSum;
-        });
-        expCols.forEach((_, cIdx) => {
-            let colSum = 0;
-            document.querySelectorAll(`.exp-v-w${w}-c${cIdx}`).forEach(input => colSum += Number(input.value) || 0);
-            document.getElementById(`w${w}_exp_c${cIdx}_tot`).innerText = colSum.toFixed(2);
-            wExp += colSum;
-        });
         for (let d = 0; d < 7; d++) {
             let rId = `w${w}d${d}`;
             let rInc = 0; let rExp = 0;
@@ -205,8 +170,6 @@ function calculate() {
             document.getElementById(`tot_inc_${rId}`).innerText = rInc.toFixed(2);
             document.getElementById(`tot_exp_${rId}`).innerText = rExp.toFixed(2);
         }
-        document.getElementById(`w${w}_inc_grand`).innerText = wInc.toFixed(2);
-        document.getElementById(`w${w}_exp_grand`).innerText = wExp.toFixed(2);
     }
     let ddTotal = 0;
     document.querySelectorAll('.dd-input').forEach(el => ddTotal += Number(el.value) || 0);
@@ -221,7 +184,7 @@ function autoSave() {
     localStorage.setItem(DB_NAME, JSON.stringify(data));
 }
 
-function forceSave() { autoSave(); alert("✅ Saved to this device!"); }
+function forceSave() { autoSave(); alert("✅ Saved!"); }
 
 function loadData() {
     const saved = localStorage.getItem(DB_NAME);
@@ -234,12 +197,24 @@ function loadData() {
     calculate();
 }
 
+function exportAsImage() {
+    const toolbar = document.querySelector('.toolbar');
+    toolbar.style.display = 'none';
+    html2canvas(document.getElementById('capture')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'Yamin_Finance.jpg';
+        link.href = canvas.toDataURL('image/jpeg', 0.9);
+        link.click();
+        toolbar.style.display = 'flex';
+    });
+}
+
 function downloadBackup() {
     const data = localStorage.getItem(DB_NAME);
     const blob = new Blob([data], {type: 'application/json'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `Yamin_Finance_Backup.json`;
+    a.download = `Yamin_Backup.json`;
     a.click();
 }
 
@@ -247,18 +222,6 @@ function importBackup(e) {
     const reader = new FileReader();
     reader.onload = (event) => { localStorage.setItem(DB_NAME, event.target.result); loadData(); };
     reader.readAsText(e.target.files[0]);
-}
-
-function exportAsImage() {
-    const toolbar = document.querySelector('.toolbar');
-    toolbar.style.display = 'none';
-    html2canvas(document.getElementById('capture')).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'Finance_Report.jpg';
-        link.href = canvas.toDataURL('image/jpeg', 0.9);
-        link.click();
-        toolbar.style.display = 'flex';
-    });
 }
 
 window.onload = init;

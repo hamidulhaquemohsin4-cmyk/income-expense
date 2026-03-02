@@ -8,7 +8,6 @@
     <style>
         :root { --primary: #002b5e; --secondary: #1a4a8e; --success: #1b8a4d; }
 
-        /* VIBRANT RUNNING GRADIENT */
         body { 
             margin: 0; font-family: 'Helvetica', 'Arial', sans-serif; padding: 20px; min-height: 100vh;
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #1e3c72, #2a5298);
@@ -28,7 +27,6 @@
         
         .toolbar { display: flex; gap: 12px; justify-content: center; margin-bottom: 30px; }
         
-        /* ULTRA SHARP TABLE STYLING */
         .table-wrapper { border: 2px solid #000; border-radius: 8px 8px 0 0; overflow: hidden; }
         table { width: 100%; border-collapse: collapse; background: white; font-size: 13px; table-layout: fixed; }
         th { background: var(--primary); color: white; padding: 14px 2px; text-transform: uppercase; border: 1px solid #000; font-weight: bold; }
@@ -36,12 +34,15 @@
         
         .week-header { background: var(--primary); color: white; padding: 12px 25px; font-weight: bold; border-radius: 8px 8px 0 0; display: inline-block; margin-top: 40px; font-size: 18px; }
 
+        /* WEEKLY DATE RANGE STYLING */
+        .week-date-range { margin: 12px 0; font-size: 15px; font-weight: bold; color: #222; }
+        .date-range-input { padding: 4px 8px; border: 1px solid #000; border-radius: 4px; font-weight: bold; font-family: inherit; font-size: 14px; margin: 0 5px; cursor: pointer; }
+
         .weekly-total-row { background: #e8f4fd !important; font-weight: 900 !important; color: #000; }
         .weekly-total-row td { border-top: 2px solid #000; border-bottom: 2px solid #000; font-size: 14px; }
 
         .row-total { font-weight: bold; color: #000; background: #f1f1f1; }
         
-        /* DESCRIPTION BOX */
         .description-area {
             width: 100%; margin-bottom: 50px; background: #fff; border: 2px solid #000; border-top: none;
             border-radius: 0 0 10px 10px; padding: 20px; box-sizing: border-box;
@@ -52,7 +53,8 @@
             padding: 12px; font-family: inherit; font-size: 15px; resize: vertical; box-sizing: border-box;
         }
 
-        input[type="number"] { width: 90%; border: 1px solid #777; padding: 6px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 13px; color: #000; }
+        input[type="number"], .daily-date { width: 90%; border: 1px solid #777; padding: 6px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 12px; color: #000; }
+        .daily-date { width: 95%; padding: 3px; font-size: 11px; margin-top: 5px; }
         
         .dd-section { max-width: 650px; margin-top: 60px; border: 2px solid #000; border-radius: 8px; }
         .dd-section table th { background: #444; }
@@ -102,7 +104,7 @@
 </div>
 
 <script>
-const DB_NAME = "Yamin_V10_Final";
+const DB_NAME = "Yamin_V12_Dates";
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const incCols = ["Work", "Carework", "Delivery", "JustEat", "Deliveroo", "Other Inc School"];
 const expCols = ["Petrol", "Car", "House", "Online", "Other Exp"];
@@ -111,12 +113,17 @@ function init() {
     let anchor = document.getElementById('table-anchor');
     let html = "";
     for (let w = 1; w <= 4; w++) {
+        // EXACT DATE RANGE HEADER
         html += `<div class="week-header">WEEK ${w} DATA ENTRY</div>
+        <div class="week-date-range">
+            Week: <input type="date" class="data-input date-range-input" data-key="w${w}_start_date"> 
+            to <input type="date" class="data-input date-range-input" data-key="w${w}_end_date">
+        </div>
         <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
-                        <th style="width:110px">DAY</th>
+                        <th style="width:110px">DAY & DATE</th>
                         ${incCols.map(c => `<th>${c}</th>`).join('')}
                         <th style="background:#004ba0">DAILY INC</th>
                         ${expCols.map(c => `<th>${c}</th>`).join('')}
@@ -126,7 +133,8 @@ function init() {
                 <tbody>`;
         for (let d = 0; d < 7; d++) {
             let id = `w${w}d${d}`;
-            html += `<tr><td style="font-weight:bold">${days[d]}</td>`;
+            html += `<tr>
+                <td style="font-weight:bold">${days[d]}<br><input type="date" class="data-input daily-date" data-key="${id}_date"></td>`;
             for(let i=0; i<6; i++) html += `<td><input type="number" step="0.01" class="data-input w${w}-i-c${i}" data-key="${id}_i${i}"></td>`;
             html += `<td id="inc-row-${id}" class="row-total">0.00</td>`;
             for(let e=0; e<5; e++) html += `<td><input type="number" step="0.01" class="data-input w${w}-e-c${e}" data-key="${id}_e${e}"></td>`;
@@ -195,9 +203,9 @@ async function exportToPDF() {
     ignore.style.visibility = 'hidden';
     
     const canvas = await html2canvas(document.getElementById('printable-content'), { 
-        scale: 4, // Ultra high resolution
+        scale: 4, 
         useCORS: true,
-        letterRendering: true, // Forces sharp text rendering
+        letterRendering: true, 
         backgroundColor: "#ffffff"
     });
     

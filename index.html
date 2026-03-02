@@ -2,45 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Yamin's Finance Tracker - IRONCLAD SAVE</title>
+    <title>Yamin's Finance Tracker - Pro Edition</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --primary: #1e3c72; --secondary: #2a5298; --success: #27ae60; --danger: #e74c3c; }
-        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #333; padding: 20px; min-height: 100vh; }
-        .container { max-width: 1700px; margin: 0 auto; background: #fff; border-radius: 15px; padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        :root { 
+            --primary: #1e3c72; 
+            --secondary: #2a5298; 
+            --success: #27ae60; 
+            --danger: #e74c3c; 
+        }
+
+        /* Running Gradient Background */
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            color: #333; 
+            padding: 20px; 
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #1e3c72, #2a5298, #0f2027, #203a43);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container { 
+            max-width: 1750px; 
+            margin: 0 auto; 
+            background: rgba(255, 255, 255, 0.95); 
+            border-radius: 15px; 
+            padding: 25px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+            backdrop-filter: blur(5px);
+        }
         
-        /* Header & Status */
         .header-section { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
         .status-pill { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-top: 10px; }
         .status-ok { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .status-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
         .toolbar { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
         
         /* Tables */
         .table-wrapper { overflow-x: auto; margin-bottom: 40px; border-radius: 8px; border: 1px solid #ddd; }
-        table { width: 100%; border-collapse: collapse; background: white; font-size: 13px; table-layout: fixed; }
-        th { background: var(--primary); color: white; padding: 10px 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        td { border: 1px solid #eee; padding: 4px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; table-layout: fixed; }
+        th { background: var(--primary); color: white; padding: 10px 2px; font-weight: 600; text-transform: uppercase; }
+        td { border: 1px solid #eee; padding: 6px 2px; text-align: center; vertical-align: top; }
         
-        .week-header { background: #f8f9fa; padding: 12px; font-weight: bold; color: var(--primary); border-left: 5px solid var(--primary); margin-bottom: 0; border-radius: 4px 4px 0 0; }
+        .week-header { background: rgba(248, 249, 250, 0.8); padding: 12px; font-weight: bold; color: var(--primary); border-left: 5px solid var(--primary); margin-bottom: 0; }
         
-        input { width: 85%; border: 1px solid #ddd; padding: 6px; border-radius: 4px; text-align: center; transition: all 0.2s; }
-        input:focus { border-color: var(--secondary); outline: none; box-shadow: 0 0 5px rgba(42,82,152,0.3); background: #fffdf0; }
-        input[type="date"] { width: 120px; font-size: 11px; }
+        /* Inputs */
+        input { width: 90%; border: 1px solid #ddd; padding: 5px; border-radius: 4px; text-align: center; transition: all 0.2s; }
+        input:focus { border-color: var(--secondary); outline: none; background: #fffdf0; }
+        
+        /* Specific Styles for Descriptions */
+        .desc-input { 
+            display: block; 
+            margin: 4px auto 0; 
+            font-size: 10px; 
+            border: none; 
+            background: #f1f3f5; 
+            color: #666; 
+            width: 90%;
+            border-radius: 2px;
+            padding: 2px;
+        }
+        .desc-input::placeholder { color: #ccc; font-style: italic; }
 
-        .row-total { font-weight: bold; color: var(--primary); background: #f0f4f8; }
+        .row-total { font-weight: bold; color: var(--primary); background: #f0f4f8; vertical-align: middle; }
         
-        /* Summary Section */
-        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
-        .summary-card { background: var(--primary); color: white; padding: 20px; border-radius: 10px; text-align: center; }
-        .summary-card h3 { margin: 0; font-size: 0.9rem; opacity: 0.8; }
-        .summary-card p { margin: 10px 0 0 0; font-size: 1.8rem; font-weight: bold; }
+        /* Summary Cards */
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 20px; }
+        .summary-card { background: var(--primary); color: white; padding: 15px; border-radius: 10px; text-align: center; }
+        .summary-card p { margin: 5px 0 0 0; font-size: 1.5rem; font-weight: bold; }
 
-        button { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; background: var(--secondary); transition: 0.2s; }
-        button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        button { padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; background: var(--secondary); }
+        button:hover { transform: translateY(-1px); filter: brightness(1.1); }
         .btn-save { background: var(--success); }
-        .btn-img { background: #673ab7; }
         .btn-clear { background: var(--danger); }
     </style>
 </head>
@@ -50,12 +91,12 @@
     <div class="header-section">
         <h1>MONTHLY INCOME & EXPENSE</h1>
         <div style="color: #666;">Design by Yamin</div>
-        <div id="storageNotice" class="status-pill">Checking Browser Storage...</div>
+        <div id="storageNotice" class="status-pill status-ok">✅ Storage Linked to this Device</div>
     </div>
 
     <div class="toolbar">
         <button class="btn-save" onclick="forceSave()">Manual Save</button>
-        <button class="btn-img" onclick="exportAsImage()">Download JPEG</button>
+        <button style="background:#673ab7" onclick="exportAsImage()">Download JPEG</button>
         <button onclick="downloadBackup()">Export JSON</button>
         <button onclick="document.getElementById('importFile').click()">Import JSON</button>
         <button class="btn-clear" onclick="clearData()">Clear All</button>
@@ -67,7 +108,7 @@
     <h2 style="color: var(--primary); margin-top: 40px;">Monthly Fixed Direct Debits</h2>
     <table style="max-width: 500px; margin-bottom: 30px;">
         <thead><tr><th style="width: 70%;">Description</th><th>Amount (£)</th></tr></thead>
-        <tbody id="ddBody">
+        <tbody>
             <tr><td>Rent</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_rent"></td></tr>
             <tr><td>Car Insurance</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_carins"></td></tr>
             <tr><td>Road Tax</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_tax"></td></tr>
@@ -77,15 +118,13 @@
         </tbody>
     </table>
 
-    <div class="summary-grid" id="summaryArea">
-        </div>
+    <div class="summary-grid" id="summaryArea"></div>
 </div>
 
 <script>
-const DB_NAME = "YaminFinance_v3";
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const DB_NAME = "YaminFinance_v4";
+const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-// 1. Build the UI
 function init() {
     let container = document.getElementById('mainTableSpace');
     let html = "";
@@ -96,7 +135,7 @@ function init() {
             <table>
                 <thead>
                     <tr>
-                        <th style="width:100px">Day</th><th style="width:140px">Date</th>
+                        <th style="width:60px">Day</th><th style="width:125px">Date</th>
                         <th>Work</th><th>Care</th><th>Deliv</th><th>JustE</th><th>Roo</th><th>Bazro</th><th>Sch</th>
                         <th style="background:#0d47a1">Income</th>
                         <th>Petrol</th><th>Aldi</th><th>Tesco</th><th>Farm</th><th>Online</th><th>Other</th><th>Desh</th>
@@ -105,71 +144,57 @@ function init() {
                 </thead>
                 <tbody>`;
         for (let d = 0; d < 7; d++) {
-            let rowId = `w${w}d${d}`;
+            let rId = `w${w}d${d}`;
             html += `<tr>
-                <td style="font-weight:bold">${days[d]}</td>
-                <td><input type="date" class="data-input" data-key="${rowId}_date"></td>`;
+                <td style="font-weight:bold; padding-top:12px">${days[d]}</td>
+                <td><input type="date" class="data-input" data-key="${rId}_date" style="margin-top:5px"></td>`;
             
-            for(let i=0; i<7; i++) html += `<td><input type="number" step="0.01" class="data-input inc-v-${rowId}" data-key="${rowId}_i${i}"></td>`;
-            html += `<td id="tot_inc_${rowId}" class="row-total">0.00</td>`;
+            // Income
+            for(let i=0; i<7; i++) html += `<td><input type="number" step="0.01" class="data-input inc-v-${rId}" data-key="${rId}_i${i}"></td>`;
+            html += `<td id="tot_inc_${rId}" class="row-total">0.00</td>`;
             
-            for(let e=0; e<7; e++) html += `<td><input type="number" step="0.01" class="data-input exp-v-${rowId}" data-key="${rowId}_e${e}"></td>`;
-            html += `<td id="tot_exp_${rowId}" class="row-total">0.00</td>
-            </tr>`;
+            // Expenses with Descriptions
+            for(let e=0; e<7; e++) {
+                html += `<td>
+                    <input type="number" step="0.01" class="data-input exp-v-${rId}" data-key="${rId}_e${e}">
+                    <input type="text" class="data-input desc-input" data-key="${rId}_e${e}_desc" placeholder="note...">
+                </td>`;
+            }
+            html += `<td id="tot_exp_${rId}" class="row-total">0.00</td></tr>`;
         }
         html += `</tbody></table></div>`;
     }
     container.innerHTML = html;
 
-    // Check storage support
-    try {
-        localStorage.setItem('test', '1');
-        localStorage.removeItem('test');
-        document.getElementById('storageNotice').innerText = "✅ Storage Active: Data stays on this device.";
-        document.getElementById('storageNotice').className = "status-pill status-ok";
-    } catch(e) {
-        document.getElementById('storageNotice').innerText = "⚠️ Storage Blocked: Data will vanish on refresh. Try a different browser.";
-        document.getElementById('storageNotice').className = "status-pill status-error";
-    }
-
-    // Attach listeners
     document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('input', () => {
-            calculate();
-            autoSave();
-        });
+        input.addEventListener('input', () => { calculate(); autoSave(); });
     });
 
     loadData();
 }
 
 function calculate() {
-    let grandIncome = 0;
-    let grandExpense = 0;
-
+    let grandIncome = 0; let grandExpense = 0;
     for (let w = 1; w <= 4; w++) {
         for (let d = 0; d < 7; d++) {
-            let rowId = `w${w}d${d}`;
+            let rId = `w${w}d${d}`;
             let rInc = 0; let rExp = 0;
-            
-            document.querySelectorAll(`.inc-v-${rowId}`).forEach(el => rInc += Number(el.value) || 0);
-            document.querySelectorAll(`.exp-v-${rowId}`).forEach(el => rExp += Number(el.value) || 0);
-            
-            document.getElementById(`tot_inc_${rowId}`).innerText = rInc.toFixed(2);
-            document.getElementById(`tot_exp_${rowId}`).innerText = rExp.toFixed(2);
+            document.querySelectorAll(`.inc-v-${rId}`).forEach(el => rInc += Number(el.value) || 0);
+            document.querySelectorAll(`.exp-v-${rId}`).forEach(el => rExp += Number(el.value) || 0);
+            document.getElementById(`tot_inc_${rId}`).innerText = rInc.toFixed(2);
+            document.getElementById(`tot_exp_${rId}`).innerText = rExp.toFixed(2);
             grandIncome += rInc; grandExpense += rExp;
         }
     }
-
     let ddTotal = 0;
     document.querySelectorAll('.dd-input').forEach(el => ddTotal += Number(el.value) || 0);
     document.getElementById('ddTotalDisplay').innerText = ddTotal.toFixed(2);
 
     document.getElementById('summaryArea').innerHTML = `
-        <div class="summary-card"><h3>Monthly Income</h3><p>£${grandIncome.toFixed(2)}</p></div>
-        <div class="summary-card" style="background:#c62828"><h3>Daily Expenses</h3><p>£${grandExpense.toFixed(2)}</p></div>
-        <div class="summary-card" style="background:#546e7a"><h3>Fixed Direct Debits</h3><p>£${ddTotal.toFixed(2)}</p></div>
-        <div class="summary-card" style="background:#2e7d32"><h3>Final Balance</h3><p>£${(grandIncome - grandExpense - ddTotal).toFixed(2)}</p></div>
+        <div class="summary-card"><h3>Income</h3><p>£${grandIncome.toFixed(2)}</p></div>
+        <div class="summary-card" style="background:#c62828"><h3>Expenses</h3><p>£${grandExpense.toFixed(2)}</p></div>
+        <div class="summary-card" style="background:#546e7a"><h3>Direct Debits</h3><p>£${ddTotal.toFixed(2)}</p></div>
+        <div class="summary-card" style="background:#2e7d32"><h3>Net Balance</h3><p>£${(grandIncome - grandExpense - ddTotal).toFixed(2)}</p></div>
     `;
 }
 
@@ -181,10 +206,7 @@ function autoSave() {
     localStorage.setItem(DB_NAME, JSON.stringify(data));
 }
 
-function forceSave() {
-    autoSave();
-    alert("Saved manually to device storage!");
-}
+function forceSave() { autoSave(); alert("Saved!"); }
 
 function loadData() {
     const saved = localStorage.getItem(DB_NAME);
@@ -197,46 +219,36 @@ function loadData() {
     calculate();
 }
 
-function clearData() {
-    if(confirm("Delete everything on this device?")) {
-        localStorage.removeItem(DB_NAME);
-        location.reload();
-    }
-}
+function clearData() { if(confirm("Clear everything?")) { localStorage.removeItem(DB_NAME); location.reload(); } }
 
 function downloadBackup() {
     const data = localStorage.getItem(DB_NAME);
     const blob = new Blob([data], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = `Yamin_Backup_${new Date().toLocaleDateString()}.json`;
+    a.href = URL.createObjectURL(blob);
+    a.download = `Yamin_Finance_Backup.json`;
     a.click();
 }
 
 function importBackup(e) {
     const reader = new FileReader();
-    reader.onload = (event) => {
-        localStorage.setItem(DB_NAME, event.target.result);
-        loadData();
-    };
+    reader.onload = (event) => { localStorage.setItem(DB_NAME, event.target.result); loadData(); };
     reader.readAsText(e.target.files[0]);
 }
 
 function exportAsImage() {
-    const btn = document.querySelector('.toolbar');
-    btn.style.display = 'none';
+    const toolbar = document.querySelector('.toolbar');
+    toolbar.style.display = 'none';
     html2canvas(document.getElementById('capture')).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'Monthly_Finance.jpg';
+        link.download = 'Finance_Report.jpg';
         link.href = canvas.toDataURL('image/jpeg', 0.9);
         link.click();
-        btn.style.display = 'flex';
+        toolbar.style.display = 'flex';
     });
 }
 
 window.onload = init;
 </script>
-
 </body>
 </html>

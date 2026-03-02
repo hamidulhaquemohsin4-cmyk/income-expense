@@ -8,9 +8,8 @@
     <style>
         :root { --primary: #1e3c72; --secondary: #2a5298; --success: #27ae60; --danger: #e74c3c; }
 
-        /* VIBRANT RUNNING GRADIENT */
         body { 
-            margin: 0; font-family: 'Segoe UI', sans-serif; padding: 20px; min-height: 100vh;
+            margin: 0; font-family: 'Segoe UI', Arial, sans-serif; padding: 20px; min-height: 100vh;
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #1e3c72, #2a5298);
             background-size: 400% 400%;
             animation: runningGradient 15s ease infinite;
@@ -22,180 +21,174 @@
         }
 
         .container { 
-            max-width: 1600px; margin: 0 auto; background: rgba(255, 255, 255, 0.96); 
+            max-width: 1600px; margin: 0 auto; background: rgba(255, 255, 255, 0.98); 
             border-radius: 20px; padding: 30px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); 
             backdrop-filter: blur(10px);
         }
         
-        .toolbar { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+        .toolbar { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; }
         
-        .table-wrapper { overflow-x: auto; margin-bottom: 0px; border: 1px solid #ddd; border-radius: 8px 8px 0 0; }
-        table { width: 100%; border-collapse: collapse; background: white; font-size: 11px; table-layout: fixed; }
-        th { background: var(--primary); color: white; padding: 8px 2px; text-transform: uppercase; border: 1px solid #444; }
-        td { border: 1px solid #eee; padding: 4px; text-align: center; }
+        /* High-Visibility Table Styling */
+        .table-wrapper { overflow-x: auto; margin-bottom: 0px; border: 1px solid #333; border-radius: 8px 8px 0 0; }
+        table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; table-layout: fixed; }
+        th { background: var(--primary); color: white; padding: 12px 2px; text-transform: uppercase; border: 1px solid #222; font-weight: 700; }
+        td { border: 1px solid #ccc; padding: 6px; text-align: center; color: #000; }
         
-        .week-title { background: var(--primary); color: white; padding: 8px 20px; font-weight: bold; border-radius: 8px 8px 0 0; display: inline-block; margin-top: 30px; }
+        .week-title { background: var(--primary); color: white; padding: 10px 25px; font-weight: bold; border-radius: 8px 8px 0 0; display: inline-block; margin-top: 35px; font-size: 16px; }
 
-        /* WEEKLY TOTALS ROW */
-        .weekly-total-row { background: #f1f3f5 !important; font-weight: bold; color: var(--primary); }
-        .weekly-total-row td { border-top: 2px solid var(--primary); padding: 8px; }
+        .weekly-total-row { background: #dceefb !important; font-weight: 800; color: #000; font-size: 13px; }
+        .weekly-total-row td { border-top: 2px solid #000; border-bottom: 2px solid #000; }
+
+        .row-total { font-weight: 700; color: #000; background: #f0f4f8; }
+        .inc-col { background: #e3f2fd; }
+        .exp-col { background: #fff5f5; }
 
         .description-area {
-            width: 100%; margin-bottom: 40px; background: #fdfdfd; border: 2px solid #ddd; border-top: none;
+            width: 100%; margin-bottom: 40px; background: #fff; border: 2px solid #333; border-top: none;
             border-radius: 0 0 12px 12px; padding: 15px; box-sizing: border-box;
         }
-        .description-label { font-weight: bold; color: var(--primary); margin-bottom: 5px; display: block; font-size: 12px; }
+        .description-label { font-weight: bold; color: var(--primary); margin-bottom: 8px; display: block; font-size: 14px; }
         .description-input { 
-            width: 100%; min-height: 50px; border: 1px solid #ccc; border-radius: 6px; 
-            padding: 8px; font-family: inherit; resize: vertical; box-sizing: border-box;
+            width: 100%; min-height: 70px; border: 1px solid #999; border-radius: 6px; 
+            padding: 10px; font-family: inherit; font-size: 14px; resize: vertical; box-sizing: border-box; color: #222;
         }
 
-        input[type="number"], input[type="date"] { width: 90%; border: 1px solid #ccc; padding: 3px; border-radius: 4px; text-align: center; font-size: 11px; }
-        .row-total { font-weight: bold; color: var(--primary); background: #f8faff; }
+        input[type="number"] { width: 90%; border: 1px solid #bbb; padding: 5px; border-radius: 4px; text-align: center; font-weight: 600; font-size: 12px; }
         
-        .dd-section { max-width: 600px; margin-top: 40px; }
-        button { padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; background: var(--secondary); transition: 0.2s; }
-        button:hover { transform: translateY(-1px); filter: brightness(1.1); }
+        .dd-section { max-width: 650px; margin-top: 50px; border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+        .dd-section h2 { padding-left: 10px; }
+
+        button { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; background: var(--secondary); transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button:hover { transform: translateY(-2px); filter: brightness(1.1); }
     </style>
 </head>
 <body>
 
 <div class="container" id="capture">
-    <div style="text-align:center; margin-bottom:20px;">
-        <h1 style="color: var(--primary); margin:0;">WEEKLY INCOME & EXPENSE SHEET</h1>
-        <p style="font-weight:bold; color:#555;">High-Quality PDF Export Enabled • Design by Yamin</p>
+    <div style="text-align:center; margin-bottom:25px;">
+        <h1 style="color: var(--primary); margin:0; font-size: 32px; letter-spacing: 1px;">WEEKLY INCOME & EXPENSE SHEET</h1>
+        <p style="font-weight:bold; color:#444; margin-top: 5px;">Design by Yamin • Financial Master Control</p>
     </div>
 
     <div class="toolbar">
-        <button style="background:var(--success)" onclick="forceSave()">Manual Save</button>
-        <button style="background:#e67e22" onclick="exportAsPDF()">Download PDF</button>
-        <button style="background:#8e44ad" onclick="exportAsImage()">Download JPEG</button>
-        <button style="background:#444" onclick="downloadBackup()">Export JSON</button>
-        <button style="background:#444" onclick="document.getElementById('importFile').click()">Import JSON</button>
+        <button style="background:var(--success)" onclick="forceSave()">SAVE DATA</button>
+        <button style="background:#e67e22" onclick="exportAsPDF()">DOWNLOAD HIGH-QUALITY PDF</button>
+        <button style="background:#8e44ad" onclick="exportAsImage()">DOWNLOAD IMAGE</button>
+        <button style="background:#444" onclick="downloadBackup()">BACKUP FILE</button>
+        <button style="background:#444" onclick="document.getElementById('importFile').click()">RESTORE FILE</button>
         <input type="file" id="importFile" style="display:none" onchange="importBackup(event)">
     </div>
 
     <div id="mainTableSpace"></div>
 
     <div class="dd-section">
-        <h2 style="color: var(--primary);">Monthly Fixed Direct Debits</h2>
-        <div class="table-wrapper" style="border-radius: 8px;">
-            <table>
-                <thead><tr><th style="width: 70%;">Description</th><th>Amount (£)</th></tr></thead>
-                <tbody id="ddBody">
-                    <tr><td>15 Pro Max MB (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v1" value="9.65"></td></tr>
-                    <tr><td>16 Pro Max MB (Lloyds)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v2" value="11.95"></td></tr>
-                    <tr><td>16 Pro Max Phone (Lloyds)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v3" value="38.00"></td></tr>
-                    <tr><td>Car Road Tax (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v4" value="23.18"></td></tr>
-                    <tr><td>Car Insurance (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v5" value="152.98"></td></tr>
-                    <tr><td>Car Breakdown (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v6" value="13.83"></td></tr>
-                    <tr><td>Netflix (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v7" value="5.99"></td></tr>
-                    <tr><td>iCloud (Halifax)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v8" value="2.99"></td></tr>
-                    <tr><td>Desh</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v9" value="100.00"></td></tr>
-                    <tr><td>Monthly Rent</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v10" value="590.00"></td></tr>
-                    <tr><td>Tax</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v11" value="650.00"></td></tr>
-                    <tr class="row-total"><td>Total Direct Debits</td><td id="ddTotalDisplay">0.00</td></tr>
-                </tbody>
-            </table>
-        </div>
+        <h2 style="color: var(--primary); margin-bottom: 10px;">Monthly Fixed Direct Debits</h2>
+        <table>
+            <thead><tr><th style="width: 70%;">Description</th><th>Amount (£)</th></tr></thead>
+            <tbody id="ddBody">
+                <tr><td>15 Pro Max MB (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v1" value="9.65"></td></tr>
+                <tr><td>16 Pro Max MB (Lloyds)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v2" value="11.95"></td></tr>
+                <tr><td>16 Pro Max Phone (Lloyds)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v3" value="38.00"></td></tr>
+                <tr><td>Car Road Tax (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v4" value="23.18"></td></tr>
+                <tr><td>Car Insurance (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v5" value="152.98"></td></tr>
+                <tr><td>Car Breakdown (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v6" value="13.83"></td></tr>
+                <tr><td>Netflix (NatWest)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v7" value="5.99"></td></tr>
+                <tr><td>iCloud (Halifax)</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v8" value="2.99"></td></tr>
+                <tr><td>Desh</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v9" value="100.00"></td></tr>
+                <tr><td>Monthly Rent</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v10" value="590.00"></td></tr>
+                <tr><td>Tax</td><td><input type="number" step="0.01" class="dd-input" data-key="dd_v11" value="650.00"></td></tr>
+                <tr style="background:#eee; font-weight:bold;"><td>Total Direct Debits</td><td id="ddTotalDisplay" style="font-size:14px">0.00</td></tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
 <script>
-const DB_NAME = "YaminFinance_PDF_V1";
+const DB_NAME = "Yamin_HighRes_V1";
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const incCols = ["Work", "Carework", "Delivery", "JustEat", "Deliveroo", "Other Inc School"];
 const expCols = ["Petrol", "Car", "House", "Online", "Other Exp"];
 
 function init() {
-    let container = document.getElementById('mainTableSpace');
+    let space = document.getElementById('mainTableSpace');
     let html = "";
     for (let w = 1; w <= 4; w++) {
-        html += `<div class="week-title">WEEK ${w}</div>
+        html += `<div class="week-title">WEEK ${w} DATA ENTRY</div>
         <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
-                        <th style="width:90px">Day</th>
+                        <th style="width:100px">Day</th>
                         ${incCols.map(c => `<th>${c}</th>`).join('')}
-                        <th style="background:#1565c0">Daily Inc</th>
+                        <th style="background:#0d47a1">DAILY INC</th>
                         ${expCols.map(c => `<th>${c}</th>`).join('')}
-                        <th style="background:#c62828">Daily Exp</th>
+                        <th style="background:#b71c1c">DAILY EXP</th>
                     </tr>
                 </thead>
                 <tbody>`;
         for (let d = 0; d < 7; d++) {
             let rId = `w${w}d${d}`;
             html += `<tr>
-                <td>${days[d]}<br><input type="date" class="data-input" data-key="${rId}_date"></td>`;
-            for(let i=0; i<6; i++) html += `<td><input type="number" step="0.01" class="data-input inc-v-w${w}-c${i}" data-key="${rId}_i${i}"></td>`;
+                <td style="font-weight:bold">${days[d]}</td>`;
+            for(let i=0; i<6; i++) html += `<td class="inc-col"><input type="number" step="0.01" class="data-input w${w}-inc-c${i}" data-key="${rId}_i${i}"></td>`;
             html += `<td id="tot_inc_${rId}" class="row-total">0.00</td>`;
-            for(let e=0; e<5; e++) html += `<td><input type="number" step="0.01" class="data-input exp-v-w${w}-c${e}" data-key="${rId}_e${e}"></td>`;
+            for(let e=0; e<5; e++) html += `<td class="exp-col"><input type="number" step="0.01" class="data-input w${w}-exp-c${e}" data-key="${rId}_e${e}"></td>`;
             html += `<td id="tot_exp_${rId}" class="row-total">0.00</td></tr>`;
         }
-        // WEEKLY TOTALS ROW
         html += `<tr class="weekly-total-row"><td>TOTALS</td>`;
-        for(let i=0; i<6; i++) html += `<td id="w${w}-inc-c${i}-sum">0.00</td>`;
-        html += `<td id="w${w}-inc-grand">0.00</td>`;
-        for(let e=0; e<5; e++) html += `<td id="w${w}-exp-c${e}-sum">0.00</td>`;
-        html += `<td id="w${w}-exp-grand">0.00</td></tr></tbody></table></div>
+        for(let i=0; i<6; i++) html += `<td id="w${w}-isum-${i}">0.00</td>`;
+        html += `<td id="w${w}-igrand">0.00</td>`;
+        for(let e=0; e<5; e++) html += `<td id="w${w}-esum-${e}">0.00</td>`;
+        html += `<td id="w${w}-egrand">0.00</td></tr></tbody></table></div>
         <div class="description-area">
             <label class="description-label">Week ${w} Notes & Descriptions</label>
-            <textarea class="data-input description-input" data-key="week_${w}_desc" placeholder="Details about Week ${w} totals..."></textarea>
+            <textarea class="data-input description-input" data-key="week_${w}_desc" placeholder="Write any specific details for Week ${w} here..."></textarea>
         </div>`;
     }
-    container.innerHTML = html;
+    space.innerHTML = html;
     document.querySelectorAll('input, textarea').forEach(el => el.addEventListener('input', () => { calculate(); autoSave(); }));
     loadData();
 }
 
 function calculate() {
     for (let w = 1; w <= 4; w++) {
-        let wIncGrand = 0; let wExpGrand = 0;
-        incCols.forEach((_, cIdx) => {
-            let colSum = 0;
-            document.querySelectorAll(`.inc-v-w${w}-c${cIdx}`).forEach(input => colSum += Number(input.value) || 0);
-            document.getElementById(`w${w}-inc-c${cIdx}-sum`).innerText = colSum.toFixed(2);
-            wIncGrand += colSum;
+        let wiG = 0; let weG = 0;
+        incCols.forEach((_, c) => {
+            let s = 0; document.querySelectorAll(`.w${w}-inc-c${c}`).forEach(i => s += Number(i.value) || 0);
+            document.getElementById(`w${w}-isum-${c}`).innerText = s.toFixed(2);
+            wiG += s;
         });
-        expCols.forEach((_, cIdx) => {
-            let colSum = 0;
-            document.querySelectorAll(`.exp-v-w${w}-c${cIdx}`).forEach(input => colSum += Number(input.value) || 0);
-            document.getElementById(`w${w}-exp-c${cIdx}-sum`).innerText = colSum.toFixed(2);
-            wExpGrand += colSum;
+        expCols.forEach((_, c) => {
+            let s = 0; document.querySelectorAll(`.w${w}-exp-c${c}`).forEach(i => s += Number(i.value) || 0);
+            document.getElementById(`w${w}-esum-${c}`).innerText = s.toFixed(2);
+            weG += s;
         });
         for (let d = 0; d < 7; d++) {
             let rId = `w${w}d${d}`;
-            let rInc = 0; let rExp = 0;
-            for(let i=0; i<6; i++) rInc += Number(document.querySelector(`[data-key="${rId}_i${i}"]`).value) || 0;
-            for(let e=0; e<5; e++) rExp += Number(document.querySelector(`[data-key="${rId}_e${e}"]`).value) || 0;
-            document.getElementById(`tot_inc_${rId}`).innerText = rInc.toFixed(2);
-            document.getElementById(`tot_exp_${rId}`).innerText = rExp.toFixed(2);
+            let rI = 0; let rE = 0;
+            for(let i=0; i<6; i++) rI += Number(document.querySelector(`[data-key="${rId}_i${i}"]`).value) || 0;
+            for(let e=0; e<5; e++) rE += Number(document.querySelector(`[data-key="${rId}_e${e}"]`).value) || 0;
+            document.getElementById(`tot_inc_${rId}`).innerText = rI.toFixed(2);
+            document.getElementById(`tot_exp_${rId}`).innerText = rE.toFixed(2);
         }
-        document.getElementById(`w${w}-inc-grand`).innerText = wIncGrand.toFixed(2);
-        document.getElementById(`w${w}-exp-grand`).innerText = wExpGrand.toFixed(2);
+        document.getElementById(`w${w}-igrand`).innerText = wiG.toFixed(2);
+        document.getElementById(`w${w}-egrand`).innerText = weG.toFixed(2);
     }
-    let ddTotal = 0;
-    document.querySelectorAll('.dd-input').forEach(el => ddTotal += Number(el.value) || 0);
-    document.getElementById('ddTotalDisplay').innerText = ddTotal.toFixed(2);
+    let ddt = 0; document.querySelectorAll('.dd-input').forEach(e => ddt += Number(e.value) || 0);
+    document.getElementById('ddTotalDisplay').innerText = ddt.toFixed(2);
 }
 
 function autoSave() {
-    const data = {};
-    document.querySelectorAll('.data-input, .dd-input').forEach(el => data[el.getAttribute('data-key')] = el.value);
-    localStorage.setItem(DB_NAME, JSON.stringify(data));
+    const d = {}; document.querySelectorAll('.data-input, .dd-input').forEach(e => d[e.getAttribute('data-key')] = e.value);
+    localStorage.setItem(DB_NAME, JSON.stringify(d));
 }
 
-function forceSave() { autoSave(); alert("✅ Saved!"); }
+function forceSave() { autoSave(); alert("✅ Data Saved to Device!"); }
 
 function loadData() {
-    const saved = localStorage.getItem(DB_NAME);
-    if (!saved) return;
-    const data = JSON.parse(saved);
-    Object.keys(data).forEach(key => {
-        const input = document.querySelector(`[data-key="${key}"]`);
-        if (input) input.value = data[key];
-    });
+    const s = localStorage.getItem(DB_NAME); if (!s) return;
+    const d = JSON.parse(s);
+    Object.keys(d).forEach(k => { const i = document.querySelector(`[data-key="${k}"]`); if (i) i.value = d[k]; });
     calculate();
 }
 
@@ -203,22 +196,30 @@ async function exportAsPDF() {
     const { jsPDF } = window.jspdf;
     const toolbar = document.querySelector('.toolbar');
     toolbar.style.display = 'none';
-    const canvas = await html2canvas(document.getElementById('capture'), { scale: 2 });
+    
+    // Increased scale for ultra-clear text
+    const canvas = await html2canvas(document.getElementById('capture'), { 
+        scale: 3, 
+        useCORS: true,
+        logging: false
+    });
+    
     const imgData = canvas.toDataURL('image/png');
     const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save('Yamin_Finance_Report.pdf');
+    const pW = pdf.internal.pageSize.getWidth();
+    const pH = (canvas.height * pW) / canvas.width;
+    
+    pdf.addImage(imgData, 'PNG', 0, 0, pW, pH, undefined, 'FAST');
+    pdf.save('Yamin_Master_Report.pdf');
     toolbar.style.display = 'flex';
 }
 
 function exportAsImage() {
     const toolbar = document.querySelector('.toolbar');
     toolbar.style.display = 'none';
-    html2canvas(document.getElementById('capture')).then(canvas => {
+    html2canvas(document.getElementById('capture'), { scale: 2 }).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'Yamin_Finance.jpg';
+        link.download = 'Yamin_Master_Sheet.jpg';
         link.href = canvas.toDataURL('image/jpeg', 0.9);
         link.click();
         toolbar.style.display = 'flex';
@@ -226,18 +227,16 @@ function exportAsImage() {
 }
 
 function downloadBackup() {
-    const data = localStorage.getItem(DB_NAME);
-    const blob = new Blob([data], {type: 'application/json'});
+    const d = localStorage.getItem(DB_NAME);
+    const b = new Blob([d], {type: 'application/json'});
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `Yamin_Backup.json`;
-    a.click();
+    a.href = URL.createObjectURL(b); a.download = `Yamin_Finance_Backup.json`; a.click();
 }
 
 function importBackup(e) {
-    const reader = new FileReader();
-    reader.onload = (event) => { localStorage.setItem(DB_NAME, event.target.result); loadData(); };
-    reader.readAsText(e.target.files[0]);
+    const r = new FileReader();
+    r.onload = (event) => { localStorage.setItem(DB_NAME, event.target.result); loadData(); };
+    r.readAsText(e.target.files[0]);
 }
 
 window.onload = init;
